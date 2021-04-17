@@ -1,12 +1,8 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.AzureAD.UI;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Identity.Web;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -25,13 +21,14 @@ namespace API.Customer.Web
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
-          .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+      //services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)    //May add authorization later like this and with an 'AzureAd' config section
+      //    .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));
+
       services.AddControllers();
 
       services.AddSwaggerGen(options =>
       {
-        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme         //Does nothing atm but can be usefull later in case of jwt authorization
         {
           Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
           In = ParameterLocation.Header,
