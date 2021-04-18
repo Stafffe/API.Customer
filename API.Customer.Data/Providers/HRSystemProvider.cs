@@ -23,9 +23,10 @@ namespace API.Customer.Data.Providers
     public async Task ValidateOfficialId(string officialId)
     {
       var client = _clientFactory.CreateClient();
+      client.BaseAddress = new Uri(_baseUrl);
 
       var request = new HttpRequestMessage(HttpMethod.Post, _validateOfficialIdUrl) { Content = new StringContent(officialId) };
-      var response = await client.SendAsync(request);
+      var response = await client.SendAsync(request, new System.Threading.CancellationToken());
       if (!response.IsSuccessStatusCode)
         throw await GenerateException(response);
 
@@ -45,6 +46,7 @@ namespace API.Customer.Data.Providers
       {
         //ignore
       }
+
       return new Exception($"Recieved error-code: {response.StatusCode} from calling {response.RequestMessage.RequestUri}. Got response content: {responseContent}.");
     }
   }

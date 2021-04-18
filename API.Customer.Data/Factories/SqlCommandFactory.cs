@@ -1,4 +1,5 @@
 ﻿using API.Customer.Data.Interfaces;
+using API.Customer.Data.Options;
 using Microsoft.Extensions.Options;
 using System.Data.Common;
 using System.Data.SqlClient;

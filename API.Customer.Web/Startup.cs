@@ -3,6 +3,7 @@ using API.Customer.Business.Interfaces;
 using API.Customer.Business.Validation;
 using API.Customer.Data.Factories;
 using API.Customer.Data.Interfaces;
+using API.Customer.Data.Options;
 using API.Customer.Data.Providers;
 using API.Customer.Web.Dummy;
 using API.Customer.Web.Interfaces;
@@ -89,7 +90,7 @@ namespace API.Customer.Web
       services.AddTransient<ICustomerMapper, CustomerMapper>();
       services.Configure<CustomerOptions>(Configuration.GetSection("Data:CustommerConnection"));
       services.AddTransient<IValidateOfficialIdProvider, HRSystemProvider>();
-      services.Configure<HRSystemProvider>(Configuration.GetSection("Data:HRSystem"));
+      services.Configure<HRSystemOptions>(Configuration.GetSection("Data:HRSystem"));
 
       //services.AddHttpClient(); //This row should be used to use a real IHTTPClientFactory
       services.AddTransient<IHttpClientFactory, DummyHttpClientFactoy>();  //Mocked client since this system dosn't exist at the moment

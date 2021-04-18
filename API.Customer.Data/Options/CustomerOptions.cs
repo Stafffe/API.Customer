@@ -1,4 +1,4 @@
-﻿namespace API.Customer.Data.Factories
+﻿namespace API.Customer.Data.Options
 {
   public class CustomerOptions
   {
