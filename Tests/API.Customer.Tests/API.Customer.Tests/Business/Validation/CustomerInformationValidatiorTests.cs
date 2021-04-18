@@ -42,15 +42,6 @@ namespace API.Customer.Tests.Business.Validation
     }
 
     [Fact]
-    public void ValidateCustomerInformation_WithMissingDotInEmail_ShouldThrow()
-    {
-      var customerInfo = GetValidCustomerInformation();
-      customerInfo.Email = "dummy@se";
-
-      Assert.Throws<ValidationException>(() => _sut.ValidateCustomerInformation(customerInfo, false));
-    }
-
-    [Fact]
     public void ValidateCustomerInformation_WithNotLettersInEmail_ShouldThrow()
     {
       var customerInfo = GetValidCustomerInformation();
@@ -68,8 +59,9 @@ namespace API.Customer.Tests.Business.Validation
     {
       var customerInfo = GetValidCustomerInformation();
       customerInfo.Adress.Country = country;
+      customerInfo.PhoneNumber = null;
 
-      _sut.ValidateCustomerInformation(customerInfo, false);
+      _sut.ValidateCustomerInformation(customerInfo, true);
     }
 
     [Theory]
@@ -123,20 +115,21 @@ namespace API.Customer.Tests.Business.Validation
       var customerInfo = GetValidCustomerInformation();
       customerInfo.PhoneNumber = phoneNumber;
 
-      _sut.ValidateCustomerInformation(customerInfo, false);
+      Assert.Throws<ValidationException>(() => _sut.ValidateCustomerInformation(customerInfo, false));
     }
 
     [Theory]
-    [InlineData("+4612345678")]
-    [InlineData("+4512345678")]
-    [InlineData("+4712345678")]
-    [InlineData("012345678")]
-    [InlineData("+46123456789123456")]
-    [InlineData("+358123456789123456")]
-    public void ValidateCustomerInformation_WithValidPhoneNumber_ShouldNotThrow(string phoneNumber)
+    [InlineData("012345678", "Sweden")]
+    [InlineData("+4612345678", "Sweden")]
+    [InlineData("+46123456789123456", "Sweden")]
+    [InlineData("+4512345678", "Denmark")]
+    [InlineData("+4712345678", "Norway")]
+    [InlineData("+358123456789123456", "Finland")]
+    public void ValidateCustomerInformation_WithValidPhoneNumber_ShouldNotThrow(string phoneNumber, string country)
     {
       var customerInfo = GetValidCustomerInformation();
       customerInfo.PhoneNumber = phoneNumber;
+      customerInfo.Adress.Country = country;
 
       _sut.ValidateCustomerInformation(customerInfo, false);
     }
