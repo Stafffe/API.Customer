@@ -109,16 +109,21 @@ namespace API.Customer.Data.Providers
 
     private IEnumerable<SqlParameter> CreateParameters(CustomerInformation customerInformation)
     {
-      yield return new SqlParameter("@OfficialId", customerInformation.OfficialId);
-      yield return new SqlParameter("@Email", customerInformation.Email);
-      yield return new SqlParameter("@PhoneNumber", customerInformation.PhoneNumber);
-      yield return new SqlParameter("@Country", customerInformation.Adress.Country);
-      yield return new SqlParameter("@ZipCode", customerInformation.Adress.ZipCode);
+      if (!string.IsNullOrWhiteSpace(customerInformation.OfficialId))
+        yield return new SqlParameter("@OfficialId", customerInformation.OfficialId);
+      if (!string.IsNullOrWhiteSpace(customerInformation.Email))
+          yield return new SqlParameter("@Email", customerInformation.Email);
+      if (!string.IsNullOrWhiteSpace(customerInformation.PhoneNumber))
+        yield return new SqlParameter("@PhoneNumber", customerInformation.PhoneNumber);
+      if (!string.IsNullOrWhiteSpace(customerInformation.Adress?.Country))
+        yield return new SqlParameter("@Country", customerInformation.Adress.Country);
+      if (!string.IsNullOrWhiteSpace(customerInformation.Adress?.ZipCode))
+        yield return new SqlParameter("@ZipCode", customerInformation.Adress.ZipCode);
     }
 
     private static string GetSetTextForUpdate(CustomerInformation customerInformation)
     {
-      var setText = new StringBuilder("SET (");
+      var setText = new StringBuilder("SET ");
       if (customerInformation.Email != null)
       {
         setText.Append("Email = @Email, ");
@@ -136,7 +141,6 @@ namespace API.Customer.Data.Providers
         setText.Append("ZipCode = @ZipCode, ");
       }
       setText.Remove(setText.Length - 2, 2);
-      setText.Append(")");
       return setText.ToString();
     }
   }

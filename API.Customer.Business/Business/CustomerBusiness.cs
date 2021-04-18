@@ -20,6 +20,7 @@ namespace API.Customer.Business.Business
 
     public async Task<CustomerInformation> GetCustomerInformation(string officialId)
     {
+      officialId = FormatOfficialId(officialId);
       await _officialIdValidator.ValidateOfficialId(officialId);
       var customerInformation = await _databaseProvider.GetCustomerInformation(officialId);
 
@@ -50,16 +51,22 @@ namespace API.Customer.Business.Business
       return await _databaseProvider.GetCustomerInformation(customerInformation.OfficialId);
     }
 
-    public async Task DeleteCustomer(string officialId) {
+    public async Task DeleteCustomer(string officialId)
+    {
+      officialId = FormatOfficialId(officialId);
       await _officialIdValidator.ValidateOfficialId(officialId);
 
       await _databaseProvider.DeleteCustomer(officialId);
     }
 
     private void FormatData(ref CustomerInformation customerInfo) {     //This could me made nicer with an external class
-      customerInfo.Adress.ZipCode = customerInfo.Adress.ZipCode.Replace(" ", "").Replace("-", "");
-      customerInfo.PhoneNumber = customerInfo.PhoneNumber.Replace(" ", "").Replace("-", "");
-      customerInfo.OfficialId = customerInfo.OfficialId.Replace("-", "");
+      customerInfo.Adress.ZipCode = customerInfo.Adress?.ZipCode?.Replace(" ", "").Replace("-", "");
+      customerInfo.PhoneNumber = customerInfo.PhoneNumber?.Replace(" ", "").Replace("-", "");
+      customerInfo.OfficialId = FormatOfficialId(customerInfo.OfficialId);
+    }
+
+    private string FormatOfficialId(string officialId) {                        
+      return officialId?.Replace("-", "");
     }
   }
 }

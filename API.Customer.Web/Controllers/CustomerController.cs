@@ -1,4 +1,5 @@
-﻿using API.Customer.Business.Interfaces;
+﻿using API.Customer.Business.Exceptions;
+using API.Customer.Business.Interfaces;
 using API.Customer.Web.DTOs;
 using API.Customer.Web.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -35,10 +36,13 @@ namespace API.Customer.Controllers
         var customerInformation = _mapper.Map(result);
         return Ok(customerInformation);
       }
+      catch (ValidationException ex) {
+        return BadRequest(ex.Message);
+      }
       catch (Exception ex)
       {
         _logger.LogError(ex, "Something went wrong trying to get customer information.");
-        return Ok(500);
+        return StatusCode(500);
       }
     }
 
@@ -53,10 +57,14 @@ namespace API.Customer.Controllers
         var customerInformation = _mapper.Map(result);
         return Ok(customerInformation);
       }
+      catch (ValidationException ex)
+      {
+        return BadRequest(ex.Message);
+      }
       catch (Exception ex)
       {
         _logger.LogError(ex, "Something went wrong trying to create customer information.");
-        return Ok(500);
+        return StatusCode(500);
       }
     }
 
@@ -71,10 +79,14 @@ namespace API.Customer.Controllers
         var customerInformation = _mapper.Map(result);
         return Ok(customerInformation);
       }
+      catch (ValidationException ex)
+      {
+        return BadRequest(ex.Message);
+      }
       catch (Exception ex)
       {
         _logger.LogError(ex, "Something went wrong trying to update customer information.");
-        return Ok(500);
+        return StatusCode(500);
       }
     }
 
@@ -86,10 +98,14 @@ namespace API.Customer.Controllers
         await _customerBusiness.DeleteCustomer(officialId);
         return Ok();
       }
+      catch (ValidationException ex)
+      {
+        return BadRequest(ex.Message);
+      }
       catch (Exception ex)
       {
         _logger.LogError(ex, "Something went wrong trying to create customer information.");
-        return Ok(500);
+        return StatusCode(500);
       }
     }
   }

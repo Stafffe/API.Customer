@@ -9,7 +9,7 @@ namespace API.Customer.Web.Mapping
     {
       return new DTOs.CustomerInformation
       {
-        Adress = new DTOs.Address { Country = customerInfo.Adress.Country, ZipCode = customerInfo.Adress.ZipCode },
+        Adress = new DTOs.Address { Country = customerInfo.Adress?.Country, ZipCode = customerInfo.Adress?.ZipCode },
         Email = customerInfo.Email,
         OfficialId = customerInfo.OfficialId,
         PhoneNumber = customerInfo.PhoneNumber
@@ -20,7 +20,7 @@ namespace API.Customer.Web.Mapping
     {
       return new DataObjects.CustomerInformation
       {
-        Adress = new DataObjects.Address { Country = customerInfo.Adress.Country, ZipCode = customerInfo.Adress.ZipCode },
+        Adress = new DataObjects.Address { Country = customerInfo.Adress?.Country, ZipCode = customerInfo.Adress?.ZipCode },
         Email = customerInfo.Email,
         OfficialId = customerInfo.OfficialId,
         PhoneNumber = customerInfo.PhoneNumber

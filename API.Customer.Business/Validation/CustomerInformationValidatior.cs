@@ -37,7 +37,7 @@ namespace API.Customer.Business.Validation
       if (string.IsNullOrWhiteSpace(country))
         throw new ValidationException("Must provide a country in message to change phonenumber.");
 
-      string phonNumberWithoutCountryNumber = "";
+      string phonNumberWithoutCountryNumber;
       if (country.Equals("sweden", StringComparison.InvariantCultureIgnoreCase))
       {
         if (phoneNumber.StartsWith("0"))
@@ -92,6 +92,8 @@ namespace API.Customer.Business.Validation
 
     private void ValidateCountry(string country)
     {
+      if (string.IsNullOrWhiteSpace(country))
+        return;
       if (!ValidCountries.Contains(country.ToLower()))
         throw new ValidationException("Invalid country.");
     }
