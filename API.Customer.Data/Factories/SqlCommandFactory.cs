@@ -9,7 +9,7 @@ namespace API.Customer.Data.Factories
   {
     private string _connectionString;
 
-    public SqlCommandFactory(IOptions<CustommerConnection> databaseOptions)
+    public SqlCommandFactory(IOptions<CustomerOptions> databaseOptions)
     {
       _connectionString = databaseOptions.Value.ConnectionString;
     }

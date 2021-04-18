@@ -4,7 +4,6 @@ namespace API.Customer.Business.Interfaces
 {
   public interface ICustomerInformationValidatior
   {
-    void ValidateOfficialId(string officialId);
-    void ValidateCustomerInformation(CustomerInformation customerInfo);
+    void ValidateCustomerInformation(CustomerInformation customerInfo, bool allowNullValues);
   }
 }

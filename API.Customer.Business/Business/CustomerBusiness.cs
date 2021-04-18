@@ -9,15 +9,18 @@ namespace API.Customer.Business.Business
   {
     private readonly IDatabaseProvider _databaseProvider;
     private readonly ICustomerInformationValidatior _customerInformationValidatior;
+    private readonly IValidateOfficialIdProvider _officialIdValidator;
 
-    public CustomerBusiness(IDatabaseProvider databaseProvider, ICustomerInformationValidatior customerInformationValidatior)
+    public CustomerBusiness(IDatabaseProvider databaseProvider, ICustomerInformationValidatior customerInformationValidatior, IValidateOfficialIdProvider officialIdValidator)
     {
       _databaseProvider = databaseProvider;
       _customerInformationValidatior = customerInformationValidatior;
+      _officialIdValidator = officialIdValidator;
     }
 
     public async Task<CustomerInformation> GetCustomerInformation(string officialId)
     {
+      await _officialIdValidator.ValidateOfficialId(officialId);
       var customerInformation = await _databaseProvider.GetCustomerInformation(officialId);
 
       return customerInformation;
@@ -25,7 +28,8 @@ namespace API.Customer.Business.Business
 
     public async Task<CustomerInformation> CreateCustomer(CustomerInformation customerInformation)
     {
-      _customerInformationValidatior.ValidateCustomerInformation(customerInformation);
+      await _officialIdValidator.ValidateOfficialId(customerInformation.OfficialId);
+      _customerInformationValidatior.ValidateCustomerInformation(customerInformation, false);
 
       await _databaseProvider.CreateCustomer(customerInformation);
 
@@ -35,7 +39,8 @@ namespace API.Customer.Business.Business
 
     public async Task<CustomerInformation> UpdateCustomer(CustomerInformation customerInformation)
     {
-      _customerInformationValidatior.ValidateCustomerInformation(customerInformation);
+      await _officialIdValidator.ValidateOfficialId(customerInformation.OfficialId);
+      _customerInformationValidatior.ValidateCustomerInformation(customerInformation, true);
 
       await _databaseProvider.UpdateCustomer(customerInformation);
 
@@ -44,7 +49,8 @@ namespace API.Customer.Business.Business
     }
 
     public async Task DeleteCustomer(string officialId) {
-      _customerInformationValidatior.ValidateOfficialId(officialId);
+      await _officialIdValidator.ValidateOfficialId(officialId);
+
       await _databaseProvider.DeleteCustomer(officialId);
     }
   }

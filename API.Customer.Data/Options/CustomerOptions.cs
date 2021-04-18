@@ -1,6 +1,6 @@
 ﻿namespace API.Customer.Data.Factories
 {
-  public class CustommerConnection
+  public class CustomerOptions
   {
     public string ConnectionString { get; set; }
   }

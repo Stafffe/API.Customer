@@ -4,6 +4,7 @@ using API.Customer.Business.Validation;
 using API.Customer.Data.Factories;
 using API.Customer.Data.Interfaces;
 using API.Customer.Data.Providers;
+using API.Customer.Web.Dummy;
 using API.Customer.Web.Interfaces;
 using API.Customer.Web.Mapping;
 using Microsoft.AspNetCore.Builder;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System.Net.Http;
 
 namespace API.Customer.Web
 {
@@ -85,7 +87,12 @@ namespace API.Customer.Web
       services.AddTransient<IDatabaseProvider, DatabaseProvider>();
       services.AddTransient<IDBCommandFactory, SqlCommandFactory>();
       services.AddTransient<ICustomerMapper, CustomerMapper>();
-      services.Configure<CustommerConnection>(Configuration.GetSection("Data:CustommerConnection"));
+      services.Configure<CustomerOptions>(Configuration.GetSection("Data:CustommerConnection"));
+      services.AddTransient<IValidateOfficialIdProvider, HRSystemProvider>();
+      services.Configure<HRSystemProvider>(Configuration.GetSection("Data:HRSystem"));
+
+      //services.AddHttpClient(); //This row should be used to use a real IHTTPClientFactory
+      services.AddTransient<IHttpClientFactory, DummyHttpClientFactoy>();  //Mocked client since this system dosn't exist at the moment
     }
   }
 }
