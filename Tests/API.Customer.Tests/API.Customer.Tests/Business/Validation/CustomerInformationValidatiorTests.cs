@@ -111,6 +111,36 @@ namespace API.Customer.Tests.Business.Validation
       _sut.ValidateCustomerInformation(customerInfo, false);
     }
 
+    [Theory]
+    [InlineData("12345678")]
+    [InlineData("22345678")]
+    [InlineData("32345678")]
+    [InlineData("+44234567891")]
+    [InlineData("+461234567")]
+    [InlineData("+461234567891234567")]
+    public void ValidateCustomerInformation_WithInvalidPhoneNumber_ShouldThrow(string phoneNumber)
+    {
+      var customerInfo = GetValidCustomerInformation();
+      customerInfo.PhoneNumber = phoneNumber;
+
+      _sut.ValidateCustomerInformation(customerInfo, false);
+    }
+
+    [Theory]
+    [InlineData("+4612345678")]
+    [InlineData("+4512345678")]
+    [InlineData("+4712345678")]
+    [InlineData("012345678")]
+    [InlineData("+46123456789123456")]
+    [InlineData("+358123456789123456")]
+    public void ValidateCustomerInformation_WithValidPhoneNumber_ShouldNotThrow(string phoneNumber)
+    {
+      var customerInfo = GetValidCustomerInformation();
+      customerInfo.PhoneNumber = phoneNumber;
+
+      _sut.ValidateCustomerInformation(customerInfo, false);
+    }
+
     private CustomerInformation GetValidCustomerInformation()
     {
       return new CustomerInformation
