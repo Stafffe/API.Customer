@@ -1,4 +1,5 @@
 ﻿using API.Customer.Data.Interfaces;
+using Microsoft.Extensions.Options;
 using System.Data.Common;
 using System.Data.SqlClient;
 
@@ -8,9 +9,9 @@ namespace API.Customer.Data.Factories
   {
     private string _connectionString;
 
-    public SqlCommandFactory(string connectionString)
+    public SqlCommandFactory(IOptions<CustommerConnection> databaseOptions)
     {
-      _connectionString = connectionString;
+      _connectionString = databaseOptions.Value.ConnectionString;
     }
 
     public DbCommand CreateCommand()

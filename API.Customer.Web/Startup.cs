@@ -1,3 +1,11 @@
+using API.Customer.Business.Business;
+using API.Customer.Business.Interfaces;
+using API.Customer.Business.Validation;
+using API.Customer.Data.Factories;
+using API.Customer.Data.Interfaces;
+using API.Customer.Data.Providers;
+using API.Customer.Web.Interfaces;
+using API.Customer.Web.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +46,8 @@ namespace API.Customer.Web
                                     
         options.OperationFilter<SecurityRequirementsOperationFilter>();
       });
+
+      RegisterDependencies(services);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +77,15 @@ namespace API.Customer.Web
       {
         endpoints.MapControllers();
       });
+    }
+
+    private void RegisterDependencies(IServiceCollection services) {
+      services.AddTransient<ICustomerBusiness, CustomerBusiness>();
+      services.AddTransient<ICustomerInformationValidatior, CustomerInformationValidatior>();
+      services.AddTransient<IDatabaseProvider, DatabaseProvider>();
+      services.AddTransient<IDBCommandFactory, SqlCommandFactory>();
+      services.AddTransient<ICustomerMapper, CustomerMapper>();
+      services.Configure<CustommerConnection>(Configuration.GetSection("Data:CustommerConnection"));
     }
   }
 }
