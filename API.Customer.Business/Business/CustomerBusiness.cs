@@ -28,6 +28,7 @@ namespace API.Customer.Business.Business
 
     public async Task<CustomerInformation> CreateCustomer(CustomerInformation customerInformation)
     {
+      FormatData(ref customerInformation);
       await _officialIdValidator.ValidateOfficialId(customerInformation.OfficialId);
       _customerInformationValidatior.ValidateCustomerInformation(customerInformation, false);
 
@@ -39,6 +40,7 @@ namespace API.Customer.Business.Business
 
     public async Task<CustomerInformation> UpdateCustomer(CustomerInformation customerInformation)
     {
+      FormatData(ref customerInformation);
       await _officialIdValidator.ValidateOfficialId(customerInformation.OfficialId);
       _customerInformationValidatior.ValidateCustomerInformation(customerInformation, true);
 
@@ -52,6 +54,11 @@ namespace API.Customer.Business.Business
       await _officialIdValidator.ValidateOfficialId(officialId);
 
       await _databaseProvider.DeleteCustomer(officialId);
+    }
+
+    private void FormatData(ref CustomerInformation customerInfo) {     //This could me made nicer with an external class
+      customerInfo.Adress.ZipCode = customerInfo.Adress.ZipCode.Remove(' ');
+      customerInfo.PhoneNumber.Remove(' ');
     }
   }
 }

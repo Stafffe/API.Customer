@@ -88,6 +88,7 @@ namespace API.Customer.Tests.Business.Validation
     [InlineData("17A70")]
     [InlineData("1707000")]
     [InlineData("170700")]
+    [InlineData("68 080")]
     [InlineData("170")]
     [InlineData("17")]
     [InlineData("7")]
@@ -100,7 +101,6 @@ namespace API.Customer.Tests.Business.Validation
     }
 
     [Theory]
-    [InlineData("680 80")]
     [InlineData("68080")]
     [InlineData("6800")]
     public void ValidateCustomerInformation_WithValidZipCode_ShouldNotThrow(string zipCode)
@@ -115,7 +115,7 @@ namespace API.Customer.Tests.Business.Validation
     {
       return new CustomerInformation
       {
-        Adress = new Address { Country = "Sweden", ZipCode = "170 70" },
+        Adress = new Address { Country = "Sweden", ZipCode = "17070" },
         Email = "dummy@dummy.se",
         OfficialId = "920202-0393",
         PhoneNumber = "+46711921411"
