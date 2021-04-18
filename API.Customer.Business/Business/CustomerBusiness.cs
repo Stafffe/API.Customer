@@ -57,8 +57,9 @@ namespace API.Customer.Business.Business
     }
 
     private void FormatData(ref CustomerInformation customerInfo) {     //This could me made nicer with an external class
-      customerInfo.Adress.ZipCode = customerInfo.Adress.ZipCode.Remove(' ');
-      customerInfo.PhoneNumber.Remove(' ');
+      customerInfo.Adress.ZipCode = customerInfo.Adress.ZipCode.Replace(" ", "").Replace("-", "");
+      customerInfo.PhoneNumber = customerInfo.PhoneNumber.Replace(" ", "").Replace("-", "");
+      customerInfo.OfficialId = customerInfo.OfficialId.Replace("-", "");
     }
   }
 }

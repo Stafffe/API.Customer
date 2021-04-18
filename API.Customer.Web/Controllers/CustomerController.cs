@@ -84,7 +84,6 @@ namespace API.Customer.Controllers
       try
       {
         await _customerBusiness.DeleteCustomer(officialId);
-
         return Ok();
       }
       catch (Exception ex)

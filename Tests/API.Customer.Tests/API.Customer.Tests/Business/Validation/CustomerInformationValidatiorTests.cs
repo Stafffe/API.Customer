@@ -140,7 +140,7 @@ namespace API.Customer.Tests.Business.Validation
       {
         Adress = new Address { Country = "Sweden", ZipCode = "17070" },
         Email = "dummy@dummy.se",
-        OfficialId = "920202-0393",
+        OfficialId = "19920202-0393",
         PhoneNumber = "+46711921411"
       };
     }

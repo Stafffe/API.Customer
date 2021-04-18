@@ -88,7 +88,7 @@ namespace API.Customer.Web
       services.AddTransient<IDatabaseProvider, DatabaseProvider>();
       services.AddTransient<IDBCommandFactory, SqlCommandFactory>();
       services.AddTransient<ICustomerMapper, CustomerMapper>();
-      services.Configure<CustomerOptions>(Configuration.GetSection("Data:CustommerConnection"));
+      services.Configure<CustomerOptions>(Configuration.GetSection("Data:CustomerConnection"));
       services.AddTransient<IValidateOfficialIdProvider, HRSystemProvider>();
       services.Configure<HRSystemOptions>(Configuration.GetSection("Data:HRSystem"));
 
