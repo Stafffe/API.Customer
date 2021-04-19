@@ -38,6 +38,11 @@ Example of a working call to test:
 }
 ```
 
+### Building and updating the api in the docker image
+The application can be opened in visual studio and built there. Once completed you may use the built in publish functionality of Visual Studio and publish the container to docker hub.
+Once in docker hub import it into your desired host service and start it. The internal ports need to be set to 80 and 443.
+
+
 ### Things I would have improved if I had more time to work on it
 There is a big lack of unit tests of the system as it is currently. It was not something I prioritized with the limited time I had since this system will never go to production anyway.
 All classes is designed by the SOLID principals thought which makes unit tests very easy to make and the whole system has been designed with unit tests and DI in mind. 
