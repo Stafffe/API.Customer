@@ -4,5 +4,6 @@
   {
     public string BaseUrl { get; set; }
     public string ValidateOfficialIdUrl { get; set; }
+    public string AuditLogUrl { get; set; }
   }
 }

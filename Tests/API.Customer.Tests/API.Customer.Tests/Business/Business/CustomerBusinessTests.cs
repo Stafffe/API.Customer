@@ -13,7 +13,7 @@ namespace API.Customer.Tests.Business.Business
     private readonly CustomerBusiness _sut;
     private readonly Mock<IDatabaseProvider> _databaseProviderMock;
     private readonly Mock<ICustomerInformationValidatior> _customerValidatorMock;
-    private readonly Mock<IValidateOfficialIdProvider> _officialIdValidatorProvider;
+    private readonly Mock<IHRSystemProvider> _officialIdValidatorProvider;
 
     private const string OfficialId = "19910101-1234";
 
@@ -21,7 +21,7 @@ namespace API.Customer.Tests.Business.Business
     {
       _databaseProviderMock = new Mock<IDatabaseProvider>();
       _customerValidatorMock = new Mock<ICustomerInformationValidatior>();
-      _officialIdValidatorProvider = new Mock<IValidateOfficialIdProvider>();
+      _officialIdValidatorProvider = new Mock<IHRSystemProvider>();
 
       _sut = new CustomerBusiness(_databaseProviderMock.Object, _customerValidatorMock.Object, _officialIdValidatorProvider.Object);
     }

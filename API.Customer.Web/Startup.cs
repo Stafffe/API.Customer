@@ -89,7 +89,7 @@ namespace API.Customer.Web
       services.AddTransient<IDBCommandFactory, SqlCommandFactory>();
       services.AddTransient<ICustomerMapper, CustomerMapper>();
       services.Configure<CustomerOptions>(Configuration.GetSection("Data:CustomerConnection"));
-      services.AddTransient<IValidateOfficialIdProvider, HRSystemProvider>();
+      services.AddTransient<IHRSystemProvider, HRSystemProvider>();
       services.Configure<HRSystemOptions>(Configuration.GetSection("Data:HRSystem"));
 
       //services.AddHttpClient(); //This row should be used to use a real IHTTPClientFactory
