@@ -46,4 +46,6 @@ Another thing that may be improved is validation. I quickly added the validation
 there may very well be more that would be nice to add.
 <br /> <br />
 Error responses from the api are not always very clear as of what went wrong. This is something that by Skandias standard is often vague as to security reasons and more info are often provided in logs.
-Since there is no external source of logging there can sometimes be hard to know what went wrong. A serilog sink should be used to somewhere a developer has read access
+Since there is no external source of logging there can sometimes be hard to know what went wrong. A serilog sink should be used to somewhere a developer has read access.
+<br /> <br />
+The swagger has build in dokumentation that is taken from code comments. The swagger could have been made clearer and more easy to use if I spent more time dokumenting things in-code. Unfortunately I ran out of time
